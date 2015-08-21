@@ -253,12 +253,13 @@ class GitGutterHandler:
         return result
 
     def run_command(self, args):
+        CREATE_NO_WINDOW = 0x08000000
         startupinfo = None
         if os.name == 'nt':
             startupinfo = subprocess.STARTUPINFO()
             startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
         proc = subprocess.Popen(args, stdout=subprocess.PIPE,
-                                startupinfo=startupinfo, stderr=subprocess.PIPE)
+                                startupinfo=startupinfo, stderr=subprocess.PIPE, creationflags=CREATE_NO_WINDOW)
         return proc.stdout.read()
 
     def load_settings(self):
